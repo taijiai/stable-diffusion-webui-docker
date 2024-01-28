@@ -13,8 +13,10 @@ x-base_service: &base_service
         reservations:
           devices:
               - driver: nvidia
-                device_ids: ['0']
+                device_ids: ['0', '1']
                 capabilities: [compute, utility]
+    environment:               
+      - TZ=America/Los_Angeles
 
 name: webui-docker
 
@@ -31,7 +33,8 @@ services:
     build: ./services/AUTOMATIC1111
     image: sd-auto:71
     environment:
-      - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
+      - CLI_ARGS=--allow-code --xformers --enable-insecure-extension-access --api
+      - TZ=America/Los_Angeles
 
   auto-cpu:
     <<: *automatic
